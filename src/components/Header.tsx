@@ -1,8 +1,8 @@
-import logo from "/assets/logo.svg?raw"
+import logo from "~/icons/logo.svg?raw"
 import ThemeToggle from "./ThemeToggle"
 import { RootStore, loadSession } from "~/store"
 import { Show, createMemo } from "solid-js"
-import { useNavigate } from "solid-start"
+import { useNavigate } from "@solidjs/router"
 
 function splitEmoji(text: string) {
   const [icon, title] = text
@@ -37,8 +37,10 @@ export default function Header() {
         id="logo"
         class="pl-1em cursor-pointer inline-block"
         onClick={() => {
-          navigate("/", { replace: true })
-          loadSession("index")
+          if (store.sessionId && store.sessionId !== "index") {
+            navigate("/", { replace: true })
+            loadSession("index")
+          }
         }}
       >
         <Show
